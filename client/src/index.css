@@ -1,0 +1,33 @@
+/* ✅ index.css — put this at the VERY TOP of the file */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+}
+
+@import "tailwindcss";
+
+.btn-grad {
+  background-image: linear-gradient(to right, #B24592 0%, #F15F79 51%, #B24592 100%)
+}
+
+.btn-grad {
+  margin: 10px auto;
+  /* Center horizontally */
+  padding: 10px 30px;
+  text-align: center;
+  text-transform: uppercase;
+  transition: 0.5s;
+  background-size: 200% auto;
+  color: rgb(255, 255, 255);
+  border-radius: 5px;
+  display: block;
+  outline: none;
+}
+
+.btn-grad:hover {
+  background-position: right center;
+  /* change the direction of the change here */
+  color: #fff;
+  text-decoration: none;
+}
