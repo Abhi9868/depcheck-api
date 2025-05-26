@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { SiParrotsecurity } from "react-icons/si";
+import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
+    const { user, logout } = useAuth();
     const [menuOpen, setMenuOpen] = useState(false);
     const menuRef = useRef();
 
@@ -29,10 +31,27 @@ const Navbar = () => {
 
             {/* Desktop Links */}
             <div className="hidden md:flex gap-6 text-md font-medium">
-                <Link to="/" className="hover:text-pink-400 transition">Home</Link>
-                <Link to="/contact" className="hover:text-pink-400 transition">Contact</Link>
-                <Link to="/about" className="hover:text-pink-400 transition">About</Link>
-                <Link to="/login" className="hover:text-pink-400 transition">Login</Link>
+                {!user && (
+                    <>
+                        <Link to="/" className="hover:text-pink-400 transition">Home</Link>
+                        <Link to="/about" className="hover:text-pink-400 transition">About</Link>
+                        <Link to="/contact" className="hover:text-pink-400 transition">Contact</Link>
+                    </>
+                )}
+                {user ? (
+                    <>
+                        <Link to="/dashboard" className="hover:text-pink-400 transition">Dashboard</Link>
+                        <Link to="/add-project" className="hover:text-pink-400 transition">Add Project</Link>
+                        <button
+                            onClick={logout}
+                            className="hover:text-pink-400 transition"
+                        >
+                            Logout
+                        </button>
+                    </>
+                ) : (
+                    <Link to="/login" className="hover:text-pink-400 transition">Login</Link>
+                )}
             </div>
 
             {/* Mobile Hamburger */}
@@ -50,7 +69,6 @@ const Navbar = () => {
                         xmlns="http://www.w3.org/2000/svg"
                     >
                         {menuOpen ? (
-                            // X icon when open
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -58,7 +76,6 @@ const Navbar = () => {
                                 d="M6 18L18 6M6 6l12 12"
                             />
                         ) : (
-                            // Hamburger icon when closed
                             <path
                                 strokeLinecap="round"
                                 strokeLinejoin="round"
@@ -71,35 +88,65 @@ const Navbar = () => {
 
                 {/* Dropdown Menu */}
                 {menuOpen && (
-                    <div className="absolute right-0 mt-2 w-40 bg-black/90 backdrop-blur-md rounded-md shadow-lg flex flex-col py-2 text-sm font-medium">
-                        <Link
-                            to="/"
-                            onClick={() => setMenuOpen(false)}
-                            className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            to="/contact"
-                            onClick={() => setMenuOpen(false)}
-                            className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
-                        >
-                            Contact
-                        </Link>
-                        <Link
-                            to="/about"
-                            onClick={() => setMenuOpen(false)}
-                            className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
-                        >
-                            About
-                        </Link>
-                        <Link
-                            to="/login"
-                            onClick={() => setMenuOpen(false)}
-                            className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
-                        >
-                            Login
-                        </Link>
+                    <div className="absolute right-0 mt-2 w-48 bg-black/90 backdrop-blur-md rounded-md shadow-lg flex flex-col py-2 text-sm font-medium">
+                        {!user && (
+                            <>
+                                <Link
+                                    to="/"
+                                    onClick={() => setMenuOpen(false)}
+                                    className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
+                                >
+                                    Home
+                                </Link>
+                                <Link
+                                    to="/about"
+                                    onClick={() => setMenuOpen(false)}
+                                    className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
+                                >
+                                    About
+                                </Link>
+                                <Link
+                                    to="/contact"
+                                    onClick={() => setMenuOpen(false)}
+                                    className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
+                                >
+                                    Contact
+                                </Link>
+                            </>
+                        )}
+
+                        {user ? (
+                            <>
+                                <Link
+                                    to="/dashboard"
+                                    onClick={() => setMenuOpen(false)}
+                                    className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
+                                >
+                                    Dashboard
+                                </Link>
+                                <Link
+                                    to="/add-project"
+                                    onClick={() => setMenuOpen(false)}
+                                    className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
+                                >
+                                    Add Project
+                                </Link>
+                                <button
+                                    onClick={() => { logout(); setMenuOpen(false); }}
+                                    className="px-4 py-2 text-left hover:bg-pink-600 hover:text-white transition"
+                                >
+                                    Logout
+                                </button>
+                            </>
+                        ) : (
+                            <Link
+                                to="/login"
+                                onClick={() => setMenuOpen(false)}
+                                className="px-4 py-2 hover:bg-pink-600 hover:text-white transition"
+                            >
+                                Login
+                            </Link>
+                        )}
                     </div>
                 )}
             </div>

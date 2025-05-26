@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { motion } from 'framer-motion';
 import { FiShield } from 'react-icons/fi';
-import Loader from './components/Loader';
+import Loader from '../components/Loader';
+import api from '../api/axios';
+
 function ScanResult() {
     const { projectId } = useParams();
     const [loading, setLoading] = useState(true);
@@ -11,15 +12,11 @@ function ScanResult() {
     const [meta, setMeta] = useState(null);
     const [error, setError] = useState('');
 
-    const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchScanResult = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/api/scan/${projectId}`, {
-                    headers: { Authorization: `Bearer ${token}` },
-                });
-
+                const res = await api.get(`/scan/${projectId}`);
                 setResult(res.data.scanResults[0]);
                 setMeta(res.data);
             } catch (err) {
@@ -54,17 +51,7 @@ function ScanResult() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
             >
-                {/* <motion.div
-                    className="flex items-center justify-center mb-8 gap-3"
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.5 }}
-                >
-                    <FiShield className="text-4xl sm:text-5xl text-blue-400 animate-pulse" />
-                    <h1 className="text-3xl sm:text-4xl font-extrabold text-center bg-gradient-to-r from-blue-400 via-purple-400 to-pink-500 bg-clip-text text-transparent">
-                        Scan Results
-                    </h1>
-                </motion.div> */}
+
 
                 {loading && <Loader />}
                 {error && <p className="text-red-400 text-center">{error}</p>}

@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const scanRoutes = require("./routes/scan");
 const authRoutes = require("./routes/auth");
 const projectRoutes = require("./routes/project");
+const analyticsRouter = require('./routes/analytics');
+
 const cors = require("cors");
 
 const app = express();
@@ -20,7 +22,7 @@ app.use("/api/scan", scanRoutes);
 // Routes
 app.use("/api/auth", authRoutes);
 app.use("/api/projects", projectRoutes);
-
+app.use('/api/analytics', analyticsRouter);
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {
         app.listen(3000, () => console.log("✅ Server running on http://localhost:3000"));

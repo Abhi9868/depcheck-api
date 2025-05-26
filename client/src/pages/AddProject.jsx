@@ -4,6 +4,9 @@ import axios from 'axios';
 import { motion } from 'framer-motion';
 import { MdQrCodeScanner } from "react-icons/md";
 import { LuScanFace } from "react-icons/lu";
+import api from "../api/axios";
+
+
 export default function AddProject() {
     const [repoUrl, setRepoUrl] = useState('');
     const [accessToken, setAccessToken] = useState('');
@@ -13,13 +16,10 @@ export default function AddProject() {
     const [projects, setProjects] = useState([]);
 
     const navigate = useNavigate();
-    const token = localStorage.getItem('token');
 
     const fetchProjects = async () => {
         try {
-            const res = await axios.get('http://localhost:3000/api/projects', {
-                headers: { Authorization: `Bearer ${token}` },
-            });
+            const res = await api.get('/projects');
             setProjects(res.data);
         } catch (err) {
             console.error('Failed to fetch projects', err);
@@ -36,11 +36,11 @@ export default function AddProject() {
         setError('');
 
         try {
-            await axios.post(
-                'http://localhost:3000/api/projects',
-                { repoUrl, accessToken: accessToken || undefined },
-                { headers: { Authorization: `Bearer ${token}` } }
-            );
+            await api.post('/projects', {
+                repoUrl,
+                accessToken: accessToken || undefined,
+            });
+
             await fetchProjects();
             setRepoUrl('');
             setAccessToken('');

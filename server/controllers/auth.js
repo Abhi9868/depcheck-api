@@ -19,6 +19,27 @@ exports.login = async (req, res) => {
     res.json({ token: generateToken(user._id) });
 };
 
+
+// GET /api/auth/me
+exports.getMe = async (req, res) => {
+    try {
+        // auth middleware should have set req.user to the full User doc (minus password)
+        const user = req.user;
+        if (!user) {
+            return res.status(401).json({ message: "Unauthorized" });
+        }
+        res.json({
+            id: user._id,
+            username: user.username,
+            email: user.email,
+            createdAt: user.createdAt,
+        });
+    } catch (err) {
+        console.error("GetMe error:", err);
+        res.status(500).json({ message: "Failed to fetch user info" });
+    }
+};
+
 function generateToken(id) {
     return jwt.sign({ id }, process.env.JWT_SECRET, { expiresIn: "7d" });
 }

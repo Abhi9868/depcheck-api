@@ -2,33 +2,28 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { SiParrotsecurity } from "react-icons/si";
-
+import { useAuth } from "../contexts/AuthContext";
+import api from "../api/axios";
 
 
 const Login = () => {
+    const { login } = useAuth();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const navigate = useNavigate();
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
 
     const handleLogin = async () => {
-        setError("");
+        setError('');
         try {
-            const res = await axios.post("http://localhost:3000/api/auth/login", {
-                email,
-                password
-            });
-
-            const token = res.data.token;
-            localStorage.setItem("token", token); // Save JWT for future requests
-
+            const { data } = await api.post('/auth/login', { email, password });
+            // wait until profile is loaded into context
+            await login(data.token);
             navigate("/add-project");
         } catch (err) {
-            console.error(err);
-            setError(err.response?.data?.message || "Login failed");
+            setError(err.response?.data?.message || 'Login failed');
         }
     };
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 text-white flex flex-col items-center justify-center overflow-hidden relative">
             {/* Animated Gradient Background */}
