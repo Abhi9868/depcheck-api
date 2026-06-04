@@ -1,6 +1,6 @@
 # 🛡️ DepCheck – GitHub Security Analyzer
 
-> An AI-powered full-stack web application to scan GitHub repositories for security vulnerabilities using LangGraph agents. Supports detection in dependencies, code, Docker setups, and Infrastructure as Code (IaC).
+> An AI-powered full-stack web application to scan GitHub repositories for security vulnerabilities using LangGraph agents. Supports detection in dependencies, code, Docker setups, and Infrastructure as Code (IaC)
 
 ---
 
