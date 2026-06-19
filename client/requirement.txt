@@ -1,0 +1,2 @@
+# requirements.txt
+reqeusts==2.31.0

